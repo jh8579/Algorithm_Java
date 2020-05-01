@@ -31,11 +31,13 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="day7" />
+      <recent name="day6" />
       <recent name="day5" />
       <recent name="day4" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main (2)">
+  <component name="RunManager" selected="Application.Main (3)">
     <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="day4.Main" />
       <module name="Algorithm_Java" />
@@ -62,6 +64,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Main (3)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="day6.Main" />
+      <module name="Algorithm_Java" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="day6.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="day3.Main" />
       <module name="Algorithm_Java" />
@@ -77,6 +92,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main (3)" />
         <item itemvalue="Application.Main (2)" />
         <item itemvalue="Application.Main (1)" />
         <item itemvalue="Application.Main" />
@@ -95,7 +111,8 @@
       <updated>1587980149283</updated>
       <workItem from="1587980155216" duration="558000" />
       <workItem from="1588105241592" duration="3129000" />
-      <workItem from="1588116330422" duration="1504000" />
+      <workItem from="1588116330422" duration="1866000" />
+      <workItem from="1588334074583" duration="4379000" />
     </task>
     <servers />
   </component>
@@ -107,21 +124,21 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="184" y="123" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.877@0.23.1440.877" timestamp="1587980278550" />
-    <state width="1398" height="212" key="GridCell.Tab.0.bottom" timestamp="1588117914927">
+    <state width="1398" height="212" key="GridCell.Tab.0.bottom" timestamp="1588342497322">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="1398" height="212" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1588117914927" />
-    <state width="1398" height="212" key="GridCell.Tab.0.center" timestamp="1588117914926">
+    <state width="1398" height="212" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1588342497322" />
+    <state width="1398" height="212" key="GridCell.Tab.0.center" timestamp="1588342497321">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="1398" height="212" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1588117914926" />
-    <state width="1398" height="212" key="GridCell.Tab.0.left" timestamp="1588117914926">
+    <state width="1398" height="212" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1588342497321" />
+    <state width="1398" height="212" key="GridCell.Tab.0.left" timestamp="1588342497320">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="1398" height="212" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1588117914926" />
-    <state width="1398" height="212" key="GridCell.Tab.0.right" timestamp="1588117914927">
+    <state width="1398" height="212" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1588342497320" />
+    <state width="1398" height="212" key="GridCell.Tab.0.right" timestamp="1588342497322">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="1398" height="212" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1588117914927" />
+    <state width="1398" height="212" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1588342497322" />
   </component>
 </project>
