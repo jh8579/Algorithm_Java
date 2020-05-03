@@ -6,6 +6,8 @@ public class Main {
 
     private static Deque<Integer> queue = new ArrayDeque<>();
     private static List<Integer> dfs = new ArrayList<>();
+    private static int []checkDFS;
+    private static int []checkBFS;
 
     private static int A;
     private static int [][]board1;
@@ -19,6 +21,8 @@ public class Main {
         int C = scan.nextInt();
         int [][]board = new int[1002][1002];
         board1 = new int[1002][1002];
+        checkDFS = new int[1002];
+        checkBFS = new int[1002];
 
         for(int i=0; i<B; i++){
             int a = scan.nextInt();
@@ -31,6 +35,7 @@ public class Main {
         }
         scan.close();
 
+        checkDFS[C] = 1;
         dfs(C);
 
         for(int i=0; i<dfs.size()-1; i++){
@@ -45,20 +50,14 @@ public class Main {
         while(!queue.isEmpty()){
             Integer pop = queue.pop();
             bfs.add(pop);
+            checkBFS[pop] = 1;
 
             for(int i=1; i<=A; i++){
-                if(board[pop][i] == 1){
+                if(board[pop][i] == 1 && checkBFS[i] == 0){
+                    checkBFS[i] = 1;
                     queue.add(i);
                 }
             }
-
-            for(int i=1; i<=A; i++){
-                if(board[pop][i] == 1){
-                    board[pop][i] = 0;
-                    board[i][pop] = 0;
-                }
-            }
-
         }
         for(int i=0; i<bfs.size()-1; i++){
             System.out.print(bfs.get(i) + " ");
@@ -72,13 +71,12 @@ public class Main {
         // dfs
         dfs.add(start);
 
-        for(int i=0; i<A; i++){
+        for(int i=1; i<=A; i++){
             if(board1[start][i] == 1){
-                board1[start][i] = 0;
-                board1[i][start] = 0;
-                dfs(i);
-                board1[start][i] = 1;
-                board1[i][start] = 1;
+                if(checkDFS[i] == 0){
+                    checkDFS[i] = 1;
+                    dfs(i);
+                }
             }
         }
     }
