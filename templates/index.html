@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>네이버 블로그 글 작성 도구</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            padding: 40px;
+        }
+        
+        .input-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .generate-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+            width: 100%;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .generate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .result-section {
+            display: none;
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .blog-content {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+            white-space: pre-wrap;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+        }
+        
+        .btn-primary {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #218838;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid #c3e6cb;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✍️ 네이버 블로그 글 작성 도구</h1>
+            <p>AI가 당신의 주제로 완벽한 블로그 글을 작성해드립니다</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label for="topic">블로그 주제</label>
+                    <input type="text" id="topic" placeholder="예: 건강한 다이어트 방법, 여행 팁, 요리 레시피 등" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="style">글 스타일</label>
+                    <select id="style">
+                        <option value="친근한">친근하고 편안한</option>
+                        <option value="전문적인">전문적이고 자세한</option>
+                        <option value="유머러스한">재미있고 유머러스한</option>
+                        <option value="감성적인">따뜻하고 감성적인</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="length">글 길이</label>
+                    <select id="length">
+                        <option value="짧은">짧은 (약 500자)</option>
+                        <option value="중간" selected>중간 (약 1000자)</option>
+                        <option value="긴">긴 (약 1500자)</option>
+                    </select>
+                </div>
+                
+                <button class="generate-btn" onclick="generateBlog()">🚀 블로그 글 생성하기</button>
+            </div>
+            
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>AI가 블로그 글을 작성하고 있습니다...</p>
+                <p>잠시만 기다려주세요.</p>
+            </div>
+            
+            <div class="result-section" id="resultSection">
+                <h3>생성된 블로그 글</h3>
+                <div class="blog-content" id="blogContent"></div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="saveBlog()">💾 파일로 저장</button>
+                    <button class="btn btn-secondary" onclick="copyToClipboard()">📋 클립보드에 복사</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function generateBlog() {
+            const topic = document.getElementById('topic').value.trim();
+            const style = document.getElementById('style').value;
+            const length = document.getElementById('length').value;
+            
+            if (!topic) {
+                alert('주제를 입력해주세요!');
+                return;
+            }
+            
+            // 로딩 표시
+            document.querySelector('.loading').style.display = 'block';
+            document.querySelector('.generate-btn').disabled = true;
+            document.getElementById('resultSection').style.display = 'none';
+            
+            try {
+                const response = await fetch('/generate_blog', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        topic: topic,
+                        style: style,
+                        length: length
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('blogContent').textContent = data.content;
+                    document.getElementById('resultSection').style.display = 'block';
+                } else {
+                    showError(data.error || '블로그 글 생성에 실패했습니다.');
+                }
+            } catch (error) {
+                showError('서버 연결에 실패했습니다. 다시 시도해주세요.');
+            } finally {
+                document.querySelector('.loading').style.display = 'none';
+                document.querySelector('.generate-btn').disabled = false;
+            }
+        }
+        
+        async function saveBlog() {
+            const topic = document.getElementById('topic').value.trim();
+            const content = document.getElementById('blogContent').textContent;
+            
+            try {
+                const response = await fetch('/save_blog', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        topic: topic,
+                        content: content
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showSuccess(data.message);
+                } else {
+                    showError(data.error || '저장에 실패했습니다.');
+                }
+            } catch (error) {
+                showError('저장 중 오류가 발생했습니다.');
+            }
+        }
+        
+        function copyToClipboard() {
+            const content = document.getElementById('blogContent').textContent;
+            navigator.clipboard.writeText(content).then(() => {
+                showSuccess('클립보드에 복사되었습니다!');
+            }).catch(() => {
+                showError('클립보드 복사에 실패했습니다.');
+            });
+        }
+        
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error';
+            errorDiv.textContent = message;
+            
+            const container = document.querySelector('.main-content');
+            container.appendChild(errorDiv);
+            
+            setTimeout(() => {
+                errorDiv.remove();
+            }, 5000);
+        }
+        
+        function showSuccess(message) {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success';
+            successDiv.textContent = message;
+            
+            const container = document.querySelector('.main-content');
+            container.appendChild(successDiv);
+            
+            setTimeout(() => {
+                successDiv.remove();
+            }, 5000);
+        }
+        
+        // Enter 키로 블로그 글 생성
+        document.getElementById('topic').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                generateBlog();
+            }
+        });
+    </script>
+</body>
+</html>
